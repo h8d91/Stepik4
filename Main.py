@@ -1,28 +1,31 @@
+import asyncore
 import socket
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(('0.0.0.0', 2222))
-sock.listen(10)
+class EchoHandler(asyncore.dispatcher_with_send):
 
-dataSize = 1024
+    def handle_read(self):
+        data = self.recv(1024)
+        if data:
+            if data == "close":
+                self.close()
+            else:    
+                self.send(data)
 
-clients = []
+class EchoServer(asyncore.dispatcher):
 
-while True:
-    conn, addr = sock.accept()
-    conn.setblocking(0)
-    print("accept %s" % addr)
-    clients.append(conn)
-    
-    for client in clients:    
-        data = client.recv(dataSize)
-        if not data:
-            continue
+    def __init__(self, host, port):
+        asyncore.dispatcher.__init__(self)
+        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.set_reuse_addr()
+        self.bind((host, port))
+        self.listen(5)
 
-        if data == "close":
-            client.close()
-            clients.remove(client)
-            print("close %s" % client.addr)
-            continue
-        
-        client.send(data)
+    def handle_accept(self):
+        pair = self.accept()
+        if pair is not None:
+            sock, addr = pair
+            print("Incoming connection from %s" % repr(addr))
+            handler = EchoHandler(sock)
+
+server = EchoServer('0.0.0.0', 2222)
+asyncore.loop()
