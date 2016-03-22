@@ -11,6 +11,7 @@ clients = []
 while True:
     conn, addr = sock.accept()
     conn.setblocking(0)
+    print("accept %s" % addr)
     clients.append(conn)
     
     for client in clients:    
@@ -21,6 +22,7 @@ while True:
         if data == "close":
             client.close()
             clients.remove(client)
+            print("close %s" % client.addr)
             continue
         
         client.send(data)
