@@ -14,7 +14,7 @@ def signup(request, *args, **kwargs):
         return http404()
 
 def question(request, *args, **kwargs):
-        return test(request, args, kwargs)
+        return HttpResponse(request.path_info)
 
 def ask(request, *args, **kwargs):
         return http404()
