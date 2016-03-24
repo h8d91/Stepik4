@@ -4,6 +4,6 @@ def application(env, start_response):
     result = [];
     
     for param in query:
-        result.append(param)
+        result.append(param + "\n")
         
     return result
