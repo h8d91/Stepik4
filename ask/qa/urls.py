@@ -1,10 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'ask.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-    
+urlpatterns = patterns('', 
     url(r'^login/$', 'qa.views.login', name='login'),
     url(r'^signup/$', 'qa.views.signup', name='signup'),
     url(r'^question/\w+/$', 'qa.views.question', name='question'),

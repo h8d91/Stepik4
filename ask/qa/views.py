@@ -1,5 +1,4 @@
-from django.http import HttpResponse, Http404
-
+from django.http import HttpResponse, HttpRequest, Http404
 
 def test(request, *args, **kwargs):
 	return HttpResponse('OK')
@@ -14,7 +13,7 @@ def signup(request, *args, **kwargs):
         return http404()
 
 def question(request, *args, **kwargs):
-        return HttpResponse(request.path_info)
+        return HttpResponse(request.get_full_path())
 
 def ask(request, *args, **kwargs):
         return http404()
