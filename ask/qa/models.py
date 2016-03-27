@@ -4,7 +4,7 @@ class Question(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
     added_at = models.DateTimeField()
-    rating = models.IntegerFild()
+    rating = models.IntegerField()
     author = models.ForeignKey('django.contrib.auth.models.User')
     likes = models.ManyToMany('django.contrib.auth.models.User')
     
