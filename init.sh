@@ -1,3 +1,5 @@
+mysql -uroot -e "create database myproject;"
+
 sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
 sudo rm /etc/nginx/sites-enabled/default
 sudo service nginx restart
@@ -10,3 +12,4 @@ mkdir css img js
 sudo ln -s /home/box/web/etc/gunicorn.conf /etc/gunicorn.d/hello.py
 sudo ln -s /home/box/web/etc/ask.py /etc/gunicorn.d/ask.py
 sudo service gunicorn restart
+
