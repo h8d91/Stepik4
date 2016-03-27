@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpRequest
 from django.core.paginator import Paginator, EmptyPage
 from qa.models import Question
+from django.shortcuts import render
 
 def test(request, *args, **kwargs):
         return HttpResponse('OK')
