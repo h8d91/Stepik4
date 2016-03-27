@@ -36,7 +36,7 @@ def popular(request):
         limit = 10
         
         try:
-            pagenum = int(request.GET.get('page'))
+            pagenum = int(request.GET.get('page', 1))
         except:
             raise Http404
         
@@ -62,7 +62,7 @@ def home(request):
         limit = 10
         
         try:
-            pagenum = int(request.GET.get('page'))
+            pagenum = int(request.GET.get('page', 1))
         except:
             raise Http404
         
