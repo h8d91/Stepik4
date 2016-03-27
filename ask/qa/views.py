@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpRequest, Http404
 from django.core.paginator import Paginator, EmptyPage
 from qa.models import Question
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 
 def test(request, *args, **kwargs):
         return HttpResponse('OK')
@@ -19,7 +20,27 @@ def ask(request, *args, **kwargs):
         return test(request, args, kwargs)
 
 def popular(request, *args, **kwargs):
-        return test(request, args, kwargs)
+        questions = Question.objects.order_by('-rating').order_by('-added_at')
+        limit = 10
+        
+        try:
+            pagenum = int(request.GET.get('page'))
+        except:
+            raise Http404
+        
+        paginator = Paginator(questions, limit)
+        paginator.baseurl = reverse('popular') + '?page='
+        
+        try:
+            page = paginator.page(pagenum)
+        except EmptyPage:
+            page = paginator.page(paginator.num_pages)
+        
+        return render(request, 'popular.html', {
+                'questions': page.object_list,
+                'paginator': paginator,
+                'page': page,
+        })
 
 def new(request, *args, **kwargs):
         return test(request, args, kwargs)
@@ -34,7 +55,7 @@ def home(request, *args, **kwargs):
             raise Http404
         
         paginator = Paginator(questions, limit)
-        paginator.baseurl = '/?page='
+        paginator.baseurl = reverse('home') + '?page='
         
         try:
             page = paginator.page(pagenum)
