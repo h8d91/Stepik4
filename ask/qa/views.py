@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpRequest
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 from qa.models import Question
 
 def test(request, *args, **kwargs):
