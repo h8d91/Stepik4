@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ question }} - QA</title>
+	</head>
+	<body>
+		<h1>{{ question }}</h1>
+		<p>{{ question.text }}</p>
+		<hr>
+			{% for answer in answers %}
+				<p><b>{{ answer.author.username }}</b> <br> {{ answer.text }} ({{ answer.added_at }})</p>
+			{% endfor %}
+	</body>
+</html>

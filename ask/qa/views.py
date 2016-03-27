@@ -14,7 +14,16 @@ def signup(request, *args, **kwargs):
         return test(request, args, kwargs)
 
 def question(request, *args, **kwargs):
-        return test(request, args, kwargs)
+        try:
+            qid = int(kwargs['id'])
+            question = Question.objects.get(id = qid)
+        except
+            raise Http404
+        
+        return render(request, 'question.html', {
+                'answers': Answers.objects.filter('question'=question).order_by('-added_at').all(),
+                'question': question,
+        })
 
 def ask(request, *args, **kwargs):
         return test(request, args, kwargs)
