@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, http404
 from django.core.paginator import Paginator, EmptyPage
 from qa.models import Question
 from django.shortcuts import render
