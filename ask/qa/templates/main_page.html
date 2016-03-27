@@ -1,6 +1,6 @@
-<html>
+п»ї<html>
 	<head>
-		<title>Главная страница - {{ page.number }}</title>
+		<title>Р“Р»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° - {{ page.number }}</title>
 	</head>
 	<body>
 		<ul>
@@ -9,11 +9,11 @@
 			{% endfor %}
 		</ul>
 		{% if page.has_previous %}
-			<a href="{{paginator.baseurl }}{{ page.previous_page_number }}">Назад</a>
+			<a href="{{paginator.baseurl }}{{ page.previous_page_number }}">РќР°Р·Р°Рґ</a>
 		{% endif %}
 		
 		{% if page.has_next %}
-			<a href="{{ paginator.baseurl }}{{ page.next_page_number }}">Вперёд</a>
+			<a href="{{ paginator.baseurl }}{{ page.next_page_number }}">Р’РїРµСЂС‘Рґ</a>
 		{% endif %}
 	</body>
 </html>
