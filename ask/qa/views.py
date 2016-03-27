@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpRequest, Http404
 from django.core.paginator import Paginator, EmptyPage
-from qa.models import Question
+from qa.models import Question, Answer
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
@@ -20,7 +20,7 @@ def question(request, *args, **kwargs):
         except:
             raise Http404
         
-        answers = Answers.objects.filter(question = question).order_by('-added_at').all()[:]
+        answers = Answer.objects.filter(question = question).order_by('-added_at').all()[:]
         
         return render(request, 'question.html', {
                 'answers': answers,
