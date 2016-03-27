@@ -1,4 +1,4 @@
-mysql -uroot -e "create database myproject;"
+sudo mysql -uroot -e "create database myproject;"
 
 sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
 sudo rm /etc/nginx/sites-enabled/default
