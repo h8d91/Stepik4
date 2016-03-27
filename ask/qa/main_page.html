@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Главная страница - {{ page.number }}</title>
+	</head>
+	<body>
+		<ul>
+			{% for q in questions %}
+				<li><a href="{{ q.get_url }}">q</a></li>
+			{% endfor %}
+		</ul>
+		{% if page.has_previous %}
+			<a href="{{paginator.baseurl }}{{ page.previous_page_number }}">Назад</a>
+		{% endif %}
+		
+		{% if page.has_next %}
+			<a href="{{ paginator.baseurl }}{{ page.next_page_number }}">Вперёд</a>
+		{% endif %}
+	</body>
+</html>
