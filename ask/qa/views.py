@@ -17,7 +17,7 @@ def question(request, *args, **kwargs):
         try:
             qid = int(kwargs['id'])
             question = Question.objects.get(id = qid)
-        except
+        except:
             raise Http404
         
         return render(request, 'question.html', {
