@@ -6,7 +6,7 @@ class Question(models.Model):
     added_at = models.DateTimeField()
     rating = models.IntegerField()
     author = models.ForeignKey('django.contrib.auth.User')
-    likes = models.ManyToMany('django.contrib.auth.User')
+    likes = models.ManyToManyField('django.contrib.auth.User')
     
 class Answer(models.Model):
     text = models.TextField()
