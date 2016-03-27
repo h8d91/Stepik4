@@ -19,8 +19,9 @@ def question(request, *args, **kwargs):
 def ask(request, *args, **kwargs):
         return test(request, args, kwargs)
 
-def popular(request, *args, **kwargs):
-        questions = Question.objects.order_by('-rating').order_by('-added_at')
+def popular(request):
+        questions = Question.objects.order_by('-rating', '-added_at')
+        
         limit = 10
         
         try:
@@ -45,7 +46,7 @@ def popular(request, *args, **kwargs):
 def new(request, *args, **kwargs):
         return test(request, args, kwargs)
 
-def home(request, *args, **kwargs):
+def home(request):
         questions = Question.objects.order_by('-added_at')
         limit = 10
         
