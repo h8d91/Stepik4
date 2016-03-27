@@ -13,8 +13,8 @@ class Question(models.Model):
     def get_url(self):
         return reverse('question', kwargs={'id': self.pk})
 
-    def __unicode__():
-        return title
+    def __unicode__(self):
+        return self.title
     
 class Answer(models.Model):
     text = models.TextField()
