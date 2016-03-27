@@ -1,8 +1,10 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 	<head>
 		<title>Главная страница - {{ page.number }}</title>
 	</head>
 	<body>
+		<h1>Новые вопросы</h1>
 		<ul>
 			{% for q in questions %}
 				<li><a href="{{ q.get_url }}">q</a></li>
