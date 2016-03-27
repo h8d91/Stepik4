@@ -7,7 +7,7 @@
 		<h1>Новые вопросы</h1>
 		<ul>
 			{% for q in questions %}
-				<li><a href="{{ q.get_url }}">q</a></li>
+				<li><a href="{{ q.get_url }}">{{ q }}</a></li>
 			{% endfor %}
 		</ul>
 		{% if page.has_previous %}
