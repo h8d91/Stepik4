@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest, http404
+from django.http import HttpResponse, HttpRequest, Http404
 from django.core.paginator import Paginator, EmptyPage
 from qa.models import Question
 from django.shortcuts import render
@@ -31,7 +31,7 @@ def home(request, *args, **kwargs):
         try:
             pagenum = int(request.GET.get('page'))
         except:
-            raise http404
+            raise Http404
         
         paginator = Paginator(questions, limit)
         paginator.baseurl = '/?page='
