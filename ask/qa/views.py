@@ -42,7 +42,7 @@ def home(request, *args, **kwargs):
             page = paginator.page(paginator.num_pages)
         
         return render(request, 'qa/main_page.html', {
-                questions: page.objects_list,
+                questions: page.object_list,
                 paginator: paginator,
                 page: page,
         })
