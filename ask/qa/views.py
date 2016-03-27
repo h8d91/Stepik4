@@ -25,20 +25,20 @@ def new(request, *args, **kwargs):
 def home(request, *args, **kwargs):
         questions = Question.objects.order_by('-added_at')
         limit = 10
-
+        
         try:
             pagenum = int(request.GET.get('page'))
         except:
             raise http404
-
-		paginator = Paginator(questions, limit)
-		paginator.baseurl = '/?page='
-
+        
+        paginator = Paginator(questions, limit)
+        paginator.baseurl = '/?page='
+        
         try:
             page = paginator.page(pagenum)
         except EmptyPage:
             page = paginator.page(paginator.num_pages)
-
+        
         return render(request, 'qa/main_page.html', {
                 questions: page.objects_list,
                 paginator: paginator,
