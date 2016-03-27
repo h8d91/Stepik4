@@ -1,5 +1,6 @@
 cd /home/box/web
 
+sudo service mysql restart
 sudo mysql -uroot -e "create database myproject;"
 
 sudo ln -s etc/nginx.conf /etc/nginx/sites-enabled/test.conf
