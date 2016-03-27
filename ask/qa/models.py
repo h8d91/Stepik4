@@ -13,7 +13,7 @@ class Question(models.Model):
     def get_url(self):
         return reverse('qa:question', kwargs={'id': self.pk})
 
-    def __unicode__:
+    def __unicode__():
         return title
     
 class Answer(models.Model):
