@@ -41,7 +41,7 @@ def home(request, *args, **kwargs):
         except EmptyPage:
             page = paginator.page(paginator.num_pages)
         
-        return render(request, 'qa/main_page.html', {
+        return render(request, 'main_page.html', {
                 questions: page.object_list,
                 paginator: paginator,
                 page: page,
