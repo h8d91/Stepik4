@@ -23,7 +23,9 @@ class AskForm(forms.Form):
         return text
 
     def save(self):
-        question = Question(self.cleaned_data)
+        question = Question()
+        question.title = self.cleaned_data.get('title')
+        question.text = self.cleaned_data.get('text')
         question.save()
         return question
 
@@ -47,7 +49,9 @@ class AnswerForm(forms.Form):
         return text
 
     def save(self):
-        answer = Answer(self.cleaned_data)
+        answer = Answer()
+        answer.text = self.cleaned_data.get('text')
+        answer.question = self.cleaned_data.get('question')
         answer.save()
         return answer
 	
