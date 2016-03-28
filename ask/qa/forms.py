@@ -1,21 +1,21 @@
-from django import forms
+п»їfrom django import forms
 
 class AskForm(forms.Form):
-    title = forms.CharField(label=u'Заголовок', max_length=255)
-    text = form.TextField(label=u'Текст вопроса', widget=forms.TextArea)
+    title = forms.CharField(label=u'Р—Р°РіРѕР»РѕРІРѕРє', max_length=255)
+    text = form.TextField(label=u'РўРµРєСЃС‚ РІРѕРїСЂРѕСЃР°', widget=forms.TextArea)
     
     def clean(self):
         return True
     
     def clean_title(self):
         if len(self.title) < 2:
-            raise ValidateError(u'Заголовок должен быть больше одного символа')
+            raise ValidateError(u'Р—Р°РіРѕР»РѕРІРѕРє РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ РѕРґРЅРѕРіРѕ СЃРёРјРІРѕР»Р°')
 
         return self.title
 
     def clean_text(self):
         if len(self.text) < 2:
-            raise ValidateError(u'Тект должен быть больше одного символа')
+            raise ValidateError(u'РўРµРєС‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ РѕРґРЅРѕРіРѕ СЃРёРјРІРѕР»Р°')
 
         return self.text
 
@@ -25,20 +25,20 @@ class AskForm(forms.Form):
         return question
 
 class AnswerForm(forms.Form):
-    text = form.TextField(label=u'Ваш вопрос', widget=forms.TextArea)
+    text = form.TextField(label=u'Р’Р°С€ РІРѕРїСЂРѕСЃ', widget=forms.TextArea)
     question = form.IntegerField(visible=False)
 
     def clean(self):
         try:
             Ouestion.objects.get(id=self.question)
         except:
-            raise ValidateError(u'Вопрос на который вы отвечаете не существует или удалён')
+            raise ValidateError(u'Р’РѕРїСЂРѕСЃ РЅР° РєРѕС‚РѕСЂС‹Р№ РІС‹ РѕС‚РІРµС‡Р°РµС‚Рµ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РёР»Рё СѓРґР°Р»С‘РЅ')
 
         return True 
 
     def clean_text(self):
         if len(self.text) < 2:
-            raise ValidateError(u'Тект должен быть больше одного символа')
+            raise ValidateError(u'РўРµРєС‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ РѕРґРЅРѕРіРѕ СЃРёРјРІРѕР»Р°')
 
         return self.text
 
