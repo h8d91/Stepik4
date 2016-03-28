@@ -28,7 +28,17 @@ def question(request, *args, **kwargs):
         })
 
 def ask(request, *args, **kwargs):
-        return test(request, args, kwargs)
+		if request.method == 'POST':
+			question = AskForm(request.POST)
+			if question.is_valid:
+				question.save()
+				return HttpResponseRedirect(question.qet_url())		
+		else:
+			question = AskForm()
+			
+		return render(request, 'ask.html', {
+					'question': question,
+			})		
 
 def popular(request):
         questions = Question.objects.order_by('-rating', '-added_at')
