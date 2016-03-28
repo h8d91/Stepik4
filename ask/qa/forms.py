@@ -5,9 +5,9 @@ class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
     text = forms.CharField(label=u'Текст вопроса', widget=forms.Textarea)
     
-    def __init__(self, user=1, **kwargs):
-        self._user = user
-        super(AskForm, self).__init__(**kwargs)
+    #def __init__(self, user=1, **kwargs):
+    #    self._user = user
+    #    super(AskForm, self).__init__(**kwargs)
         
     def clean_title(self):
         title = self.cleaned_data.get('title')
@@ -24,7 +24,7 @@ class AskForm(forms.Form):
         return text
         
     def save(self):
-        self.cleaned_data['author'] = self._user
+        self.cleaned_data['author'] = 1
         question = Question(**self.cleaned_data)
         question.save()
         return question
