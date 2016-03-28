@@ -9,21 +9,21 @@ class AskForm(forms.Form):
         return True
     
     def clean_title(self):
-        if len(self.title) < 2:
+        title = self.cleaned_data.get('title')
+        if len(title) < 2:
             raise ValidateError(u'Заголовок должен быть больше одного символа')
 
-        return self.title
+        return title
 
     def clean_text(self):
-        if len(self.text) < 2:
+        text = self.cleaned_data.get('text')
+        if len(text) < 2:
             raise ValidateError(u'Тект должен быть больше одного символа')
 
-        return self.text
+        return text
 
     def save(self):
-        question = Question()
-        question.title = self.cleaned_data['title']
-        question.text = self.cleaned_data['text']
+        question = Question(**self.cleaned_data)
         question.save()
         return question
 
@@ -33,22 +33,21 @@ class AnswerForm(forms.Form):
 
     def clean(self):
         try:
-            Ouestion.objects.get(id=self.question)
+            Ouestion.objects.get(id=self.cleaned_data.get('question'))
         except:
             raise ValidateError(u'Вопрос на который вы отвечаете не существует или удалён')
 
         return True 
 
     def clean_text(self):
-        if len(self.text) < 2:
+        text = self.cleaned_data.get('text')
+        if len(text) < 2:
             raise ValidateError(u'Тект должен быть больше одного символа')
 
-        return self.text
+        return text
 
     def save(self):
-        answer = Answer()
-        answer.text = self.cleaned_data['text']
-        answer.question = self.cleaned_data['question']
+        answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
 	
