@@ -28,15 +28,15 @@ def question(request, *args, **kwargs):
                 'question': question,
         })
 
-def ask(request, *args, **kwargs):
+def ask(request):
         if request.method == 'POST':
             question = AskForm(request.POST)
-            if question.is_valid:
+            if question.is_valid():
                 question.save()
                 return HttpResponseRedirect(question.qet_url())		
         else:
             question = AskForm()
-
+            
         return render(request, 'ask.html', {
                     'question': question,
             })		
