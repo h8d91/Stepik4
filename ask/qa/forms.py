@@ -1,13 +1,19 @@
 ﻿from django import forms
 from qa.models import Question, Answer
+from django.contrib.auth.models import User
 
 class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
     text = forms.CharField(label=u'Текст вопроса', widget=forms.Textarea)
     
-    #def __init__(self, user=1, **kwargs):
-    #    self._user = user
-    #    super(AskForm, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        #self._user = user
+        try:
+            user_ = User.objects.get(username='test_user')
+        except:
+            user_ = User.objects.create_user('test_user', None, 'test_user')
+            user_.save()
+        super(AskForm, self).__init__(**kwargs)
         
     def clean_title(self):
         title = self.cleaned_data.get('title')
@@ -24,7 +30,7 @@ class AskForm(forms.Form):
         return text
         
     def save(self):
-        self.cleaned_data['author'] = 1
+        self.cleaned_data['author'] = user_
         question = Question(**self.cleaned_data)
         question.save()
         return question
