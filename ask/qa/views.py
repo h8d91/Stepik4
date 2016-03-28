@@ -4,6 +4,7 @@ from qa.models import Question, Answer
 from qa.forms import AskForm, AnswerForm
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 def test(request, *args, **kwargs):
         return HttpResponse('OK')
@@ -27,7 +28,8 @@ def question(request, *args, **kwargs):
                 'answers': answers,
                 'question': question,
         })
-
+        
+@login_required
 def ask(request):
         if request.method == 'POST':
             question = AskForm(request.user, request.POST)
