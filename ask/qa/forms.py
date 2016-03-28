@@ -2,7 +2,7 @@
 
 class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
-    text = forms.CharField(label=u'Текст вопроса', widget=forms.TextArea)
+    text = forms.CharField(label=u'Текст вопроса', widget=forms.TextInput)
     
     def clean(self):
         return True
@@ -26,7 +26,7 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.TextField(label=u'Ваш вопрос', widget=forms.TextArea)
-    question = forms.IntegerField(visible=False)
+    question = forms.IntegerField(widget=forms.HiddenInput)
 
     def clean(self):
         try:
