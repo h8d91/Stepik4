@@ -23,7 +23,7 @@ class AskForm(forms.Form):
         return text
 
     def save(self):
-        question = Question(**self.cleaned_data)
+        question = Question(self.cleaned_data)
         question.save()
         return question
 
@@ -47,7 +47,7 @@ class AnswerForm(forms.Form):
         return text
 
     def save(self):
-        answer = Answer(**self.cleaned_data)
+        answer = Answer(self.cleaned_data)
         answer.save()
         return answer
 	
