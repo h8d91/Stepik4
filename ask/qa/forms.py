@@ -4,6 +4,10 @@ from qa.models import Question, Answer
 class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
     text = forms.CharField(label=u'Текст вопроса', widget=forms.Textarea)
+    
+    def __init__(self, user, **kwargs):
+        self._user = user
+        super(AskForm, self).__init__(**kwargs)
         
     def clean_title(self):
         title = self.cleaned_data.get('title')
@@ -20,6 +24,7 @@ class AskForm(forms.Form):
         return text
         
     def save(self):
+        self.cleaned_data['author'] = self._user
         question = Question(**self.cleaned_data)
         question.save()
         return question
@@ -27,7 +32,11 @@ class AskForm(forms.Form):
 class AnswerForm(forms.Form):
     text = forms.CharField(label=u'Ваш вопрос', widget=forms.Textarea)
     question = forms.IntegerField(widget=forms.HiddenInput)
-    
+     
+    def __init__(self, user, **kwargs):
+        self._user = user
+        super(AskForm, self).__init__(**kwargs)
+         
     def clean(self):
         try:
             Ouestion.objects.get(id=self.cleaned_data.get('question'))
@@ -44,6 +53,7 @@ class AnswerForm(forms.Form):
         return text
         
     def save(self):
+        self.cleaned_data['author'] = self._user
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer

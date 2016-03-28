@@ -30,7 +30,7 @@ def question(request, *args, **kwargs):
 
 def ask(request):
         if request.method == 'POST':
-            question = AskForm(request.POST)
+            question = AskForm(request.user, request.POST)
             if question.is_valid():
                 question.save()
                 return HttpResponseRedirect(question.qet_url())		
