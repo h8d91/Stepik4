@@ -13,7 +13,7 @@ class AskForm(forms.Form):
         except:
             user_ = User.objects.create_user('test_user', None, 'test_user')
             user_.save()
-        super(AskForm, self).__init__(**kwargs)
+        super(AskForm, self).__init__(kwargs)
         
     def clean_title(self):
         title = self.cleaned_data.get('title')
