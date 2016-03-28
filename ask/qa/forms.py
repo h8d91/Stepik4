@@ -9,10 +9,10 @@ class AskForm(forms.Form):
     def __init__(self, **kwargs):
         #self._user = user
         try:
-            user_ = User.objects.get(username='test_user')
+            self.user_ = User.objects.get(username='test_user')
         except:
-            user_ = User.objects.create_user('test_user', None, 'test_user')
-            user_.save()
+            self.user_ = User.objects.create_user('test_user', None, 'test_user')
+            self.user_.save()
         super(AskForm, self).__init__(kwargs)
         
     def clean_title(self):
@@ -30,7 +30,7 @@ class AskForm(forms.Form):
         return text
         
     def save(self):
-        self.cleaned_data['author'] = user_
+        self.cleaned_data['author'] = self.user_
         question = Question(**self.cleaned_data)
         question.save()
         return question
