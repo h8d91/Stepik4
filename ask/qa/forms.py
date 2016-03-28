@@ -2,7 +2,7 @@
 
 class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
-    text = forms.TextField(label=u'Текст вопроса', widget=forms.TextArea)
+    text = forms.CharField(label=u'Текст вопроса', widget=forms.TextArea)
     
     def clean(self):
         return True
