@@ -1,8 +1,8 @@
-
+from django import forms
 
 class AskForm(forms.Form):
-	title = forms.CharField(max_length=255)
-	text = form.TextField(widget=forms.TextArea)
+	title = forms.CharField(label='Заголовок', max_length=255)
+	text = form.TextField(label='Текст вопроса', widget=forms.TextArea)
 	
 	def clean(self):
 		return True
@@ -25,8 +25,8 @@ class AskForm(forms.Form):
 		return question
 
 class AnswerForm(forms.Form):
-	text = form.TextField(widget=forms.TextArea)
-	question = form.IntegerField()
+	text = form.TextField(label='Ваш вопрос', widget=forms.TextArea)
+	question = form.IntegerField(visible=False)
 	
 	def clean(self):
 		try:
