@@ -34,8 +34,8 @@ def ask(request):
         if request.method == 'POST':
             question = AskForm(**request.POST)
             if question.is_valid():
-                question.save()
-                return HttpResponseRedirect(Question(**question.cleaned_data).qet_url())		
+                question = question.save()
+                return HttpResponseRedirect(question.qet_url())		
         else:
             question = AskForm()
             
