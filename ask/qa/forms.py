@@ -5,7 +5,7 @@ class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
     text = forms.CharField(label=u'Текст вопроса', widget=forms.Textarea)
     
-    def __init__(self, user, **kwargs):
+    def __init__(self, user=1, **kwargs):
         self._user = user
         super(AskForm, self).__init__(**kwargs)
         

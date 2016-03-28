@@ -29,7 +29,7 @@ def question(request, *args, **kwargs):
                 'question': question,
         })
         
-@login_required
+#@login_required
 def ask(request):
         if request.method == 'POST':
             question = AskForm(request.user, request.POST)
