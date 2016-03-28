@@ -35,7 +35,7 @@ def ask(request):
             question = AskForm(**request.POST)
             if question.is_valid():
                 question = question.save()
-                return HttpResponseRedirect(question.qet_url())		
+                return HttpResponseRedirect(question.get_url())		
         else:
             question = AskForm()
             
