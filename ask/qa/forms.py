@@ -4,9 +4,6 @@ from qa.models import Question, Answer
 class AskForm(forms.Form):
     title = forms.CharField(label=u'Заголовок', max_length=255)
     text = forms.CharField(label=u'Текст вопроса', widget=forms.Textarea)
-    
-    def clean(self):
-        return True
         
     def clean_title(self):
         title = self.cleaned_data.get('title')
@@ -37,7 +34,7 @@ class AnswerForm(forms.Form):
         except:
             raise ValidateError(u'Вопрос на который вы отвечаете не существует или удалён')
          
-        return True 
+        return self.cleaned_data 
          
     def clean_text(self):
         text = self.cleaned_data.get('text')
