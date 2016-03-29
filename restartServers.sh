@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Restart NGINX"
 sudo service nginx restart
 
