@@ -2,14 +2,14 @@
 <html>
 	<head>
 	    <meta charset="utf-8">
-		<title>{{ question.render() }} - QA</title>
+		<title>{{ question[0] }} - QA</title>
 	</head>
 	<body>
-		<h1>{{ question.render() }}</h1>
-		<p>{{ question.text.render() }}</p>
+		<h1>{{ question[0] }}</h1>
+		<p>{{ question.text[0] }}</p>
 		<hr>
 			{% for answer in answers %}
-				<p><b>{{ answer.author.username }}</b> <br> {{ answer.text.render() }} ({{ answer.added_at }})</p>
+				<p><b>{{ answer.author.username }}</b> <br> {{ answer.text[0] }} ({{ answer.added_at }})</p>
 			{% endfor %}
 	</body>
 </html>
