@@ -23,8 +23,6 @@ def question(request, *args, **kwargs):
             raise Http404
         
         answers = Answer.objects.filter(question = question).order_by('-added_at').all()[:]
-        #d = request.GET.dict()
-        #d.update({'question_id': question.id, 'text': 'Ваш ответ'})
         answerform = AnswerForm(question_id = question.id, text = 'Ваш ответ')
         
         
@@ -41,7 +39,7 @@ def answer(request):
             
             if answer.is_valid(): 
                 answer.save()
-                question = Question.objects.get(id = int(answer.cleaned_data['question_id']))
+                question = Question.objects.get(id = int(answer.cleaned_data['question']))
                 
                 return HttpResponseRedirect(question.get_url())
         
