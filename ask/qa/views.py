@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
+﻿from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from qa.models import Question, Answer
 from qa.forms import AskForm, AnswerForm
@@ -28,7 +28,7 @@ def question(request, *args, **kwargs):
         return render(request, 'question.html', {
                 'answers': answers,
                 'question': question,
-                'answerform': AnswerForm(question = question, text = 'Ваш ответ'),
+                'answerform': AnswerForm(question = question, text = 'Answer'),
         })
         
 #@login_required
