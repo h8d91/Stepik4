@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $1 == "stepic" ]
+if [[ $1 == "stepic" ]]
 then sudo service mysql restart
 fi
 
