@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if ( $1 -eq "stepic" )
+if [ $1 == "stepic" ]
 then sudo service mysql restart
 fi
 
-sudo mysql -uroot -e "CREATE DATABASE IF NOT EXISTS myproject CHARACTER SET utf8 COLLATE utf8_general_ci;"
+sudo mysql -uroot -e "CREATE DATABASE IF NOT EXISTS myproject CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 
 if test -e /etc/nginx/sites-enabled/test.conf; then sudo rm /etc/nginx/sites-enabled/test.conf; fi
 sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/test.conf
@@ -16,7 +16,7 @@ sudo ln -s /home/box/web/etc/gunicorn.conf /etc/gunicorn.d/hello.py
 sudo ln -s /home/box/web/etc/ask.py /etc/gunicorn.d/ask.py
 
 cd /home/box/web
-python3 ask/manage.py makemigrations
-python3 ask/manage.py migrate
+python ask/manage.py makemigrations
+python ask/manage.py migrate
 
 bash restartServers.sh
