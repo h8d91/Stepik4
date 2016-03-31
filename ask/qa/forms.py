@@ -13,26 +13,12 @@ def getTestUser():
 
 
 class AskForm(forms.Form):
-    title = forms.CharField(label='Заголовок', max_length=255, initial='123')
-    text = forms.CharField(label='Текст вопроса', widget=forms.Textarea, initial='123')
+    title = forms.CharField(label='Заголовок', max_length=255, min_length = 1)
+    text = forms.CharField(label='Текст вопроса', widget=forms.Textarea, min_length = 1)
     
     def __init__(self, **kwargs):
         self.user_ = getTestUser() 
         super(AskForm, self).__init__(kwargs)
-        
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if len(title) < 2:
-            raise ValidationError('Заголовок должен быть больше одного символа')
-        
-        return title
-        
-    def clean_text(self):
-        text = self.cleaned_data['text']
-        if len(text) < 2:
-            raise ValidationError('Тект должен быть больше одного символа')
-        
-        return text
         
     def save(self):
         self.cleaned_data['author'] = self.user_
@@ -41,28 +27,13 @@ class AskForm(forms.Form):
         return question
 
 class AnswerForm(forms.Form):
-    text = forms.CharField(label='Ваш ответ', widget=forms.Textarea)
-    question_id = forms.IntegerField(widget=forms.HiddenInput)
+    text = forms.CharField(label='Ваш ответ', widget=forms.Textarea, min_length = 1)
+    question = forms.ModelChoiceField(queryset=Question.objects, widget=forms.HiddenInput)
      
     def __init__(self, **kwargs):
         self.user_ = getTestUser()      
         super(AnswerForm, self).__init__(kwargs)
-         
-    def clean_text(self):
-        text = self.cleaned_data['text']
-        if len(text) < 2:
-            raise ValidationError('Тект должен быть больше одного символа')
-         
-        return text
-
-    def clean_question_id(self):
-        try:
-            qid = self.cleaned_data['question_id']
-            #question = Ouestion.objects.get(id = qid)
-        except:
-            raise ValidationError('Вопрос на который вы отвечаете не существует или удалён')
-         
-        return qid 
+     
         
     def save(self):
         self.cleaned_data['author'] = self.user_

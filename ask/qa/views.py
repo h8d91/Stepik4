@@ -22,13 +22,13 @@ def question(request, *args, **kwargs):
         except:
             raise Http404
         
-        answers = Answer.objects.filter(question = question).order_by('-added_at').all()[:]
+        answers = Answer.objects.filter(question = question).order_by('-added_at').all()
         
         
         return render(request, 'question.html', {
                 'answers': answers,
                 'question': question,
-                'answerform': AnswerForm(question_id = question.id, text = 'Ваш ответ'),
+                'answerform': AnswerForm(question = question, text = 'Ваш ответ'),
         })
         
 #@login_required
@@ -40,7 +40,7 @@ def answer(request):
                 answer.save()
             
             try:
-                question = Question.objects.get(id = int(answer.cleaned_data['question_id']))
+                question = answer.cleaned_data['question']
             except:
                 raise Http404
 
