@@ -8,10 +8,9 @@
 		<h1>Заполни поля ниже</h1>
 		
 		<form method="POST" action="/ask/">
-			<p>{{ question.title }}</p>
-			<p>{{ question.text }}</p>
+			{{ question.as_p }}
 			{% csrf_token %}
-			<input type="submit" value="Отправить"/>
+			<input type="submit" value="Задать"/>
 		</form>
 	</body>
 </html>

@@ -23,16 +23,35 @@ def question(request, *args, **kwargs):
             raise Http404
         
         answers = Answer.objects.filter(question = question).order_by('-added_at').all()[:]
+        #d = request.GET.dict()
+        #d.update({'question_id': question.id, 'text': 'Ваш ответ'})
+        answerform = AnswerForm(question_id = question.id, text = 'Ваш ответ')
+        
         
         return render(request, 'question.html', {
                 'answers': answers,
                 'question': question,
+                'answerform': answerform,
         })
         
 #@login_required
+def answer(request):
+        if request.method == 'POST':
+            answer = AnswerForm(**request.POST.dict())
+            
+            if answer.is_valid(): 
+                answer.save()
+                question = Question.objects.get(id = int(answer.cleaned_data['question_id']))
+                
+                return HttpResponseRedirect(question.get_url())
+        
+        raise Http404
+            		
+
+#@login_required
 def ask(request):
         if request.method == 'POST':
-            question = AskForm(**request.POST)
+            question = AskForm(**request.POST.dict())
             if question.is_valid():
                 question = question.save()
                 return HttpResponseRedirect(question.get_url())		
@@ -41,7 +60,7 @@ def ask(request):
             
         return render(request, 'ask.html', {
                     'question': question,
-            })		
+            })
 
 def popular(request):
         questions = Question.objects.order_by('-rating', '-added_at')
@@ -88,7 +107,7 @@ def home(request):
             page = paginator.page(paginator.num_pages)
         
         return render(request, 'main_page.html', {
-                'questions': page.object_list,
+                'questions': page,
                 'paginator': paginator,
                 'page': page,
         })

@@ -1,4 +1,5 @@
 ﻿from django import forms
+from django.core.exceptions import ValidationError
 from qa.models import Question, Answer
 from django.contrib.auth.models import User
 
@@ -36,20 +37,17 @@ class AskForm(forms.Form):
         return question
 
 class AnswerForm(forms.Form):
-    text = forms.CharField(label='Ваш вопрос', widget=forms.Textarea)
-    question = forms.IntegerField(widget=forms.HiddenInput)
+    text = forms.CharField(label='Ваш ответ', widget=forms.Textarea)
+    question_id = forms.IntegerField(widget=forms.HiddenInput)
      
-    def __init__(self, user, **kwargs):
-        self._user = user
-        super(AskForm, self).__init__(**kwargs)
-         
-    def clean(self):
+    def __init__(self, **kwargs):
+        #self._user = user
         try:
-            Ouestion.objects.get(id=self.cleaned_data.get('question'))
+            self.user_ = User.objects.get(username='test_user')
         except:
-            raise ValidationError('Вопрос на который вы отвечаете не существует или удалён')
-         
-        return self.cleaned_data 
+            self.user_ = User.objects.create_user('test_user', None, 'test_user')
+            self.user_.save()
+        super(AnswerForm, self).__init__(kwargs)
          
     def clean_text(self):
         text = self.cleaned_data['text']
@@ -57,9 +55,18 @@ class AnswerForm(forms.Form):
             raise ValidationError('Тект должен быть больше одного символа')
          
         return text
+
+    def clean_question(self):
+        try:
+            qid = int(self.cleaned_data['question'])
+            #question = Ouestion.objects.get(id = qid)
+        except:
+            raise ValidationError('Вопрос на который вы отвечаете не существует или удалён')
+         
+        return qid 
         
     def save(self):
-        self.cleaned_data['author'] = self._user
+        self.cleaned_data['author'] = self.user_
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer

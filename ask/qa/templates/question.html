@@ -2,11 +2,18 @@
 <html>
 	<head>
 	    <meta charset="utf-8">
-		<title>{{ question }} - QA</title>
+		<title>{{ question.title }} - QA</title>
 	</head>
 	<body>
-		<h1>{{ question }}</h1>
+		<h1>{{ question.title }}</h1>
 		<p>{{ question.text }}</p>
+		<hr>
+			<form method="POST" action="/answer/">
+				{{ answerform.as_p }}
+
+				{% csrf_token %}
+				<input type="submit" value="Ответить"/>
+			</form>
 		<hr>
 			{% for answer in answers %}
 				<p><b>{{ answer.author.username }}</b> <br> {{ answer.text }} ({{ answer.added_at }})</p>
