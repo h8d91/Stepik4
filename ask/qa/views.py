@@ -23,13 +23,12 @@ def question(request, *args, **kwargs):
             raise Http404
         
         answers = Answer.objects.filter(question = question).order_by('-added_at').all()[:]
-        answerform = AnswerForm(question_id = question.id, text = 'Ваш ответ')
         
         
         return render(request, 'question.html', {
                 'answers': answers,
                 'question': question,
-                'answerform': answerform,
+                'answerform': AnswerForm(question_id = question.id, text = 'Ваш ответ'),
         })
         
 #@login_required
@@ -39,9 +38,13 @@ def answer(request):
             
             if answer.is_valid(): 
                 answer.save()
-                question = Question.objects.get(id = int(answer.cleaned_data['question']))
-                
-                return HttpResponseRedirect(question.get_url())
+            
+            try:
+                question = Question.objects.get(id = int(answer.cleaned_data['question_id']))
+            except:
+                raise Http404
+
+            return HttpResponseRedirect(question.get_url())
         
         raise Http404
             		

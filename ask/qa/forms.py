@@ -3,17 +3,21 @@ from django.core.exceptions import ValidationError
 from qa.models import Question, Answer
 from django.contrib.auth.models import User
 
+def getTestUser():
+    try:
+        user_ = User.objects.get(username='test_user')
+    except:
+        user_ = User.objects.create_user('test_user', None, 'test_user')
+        user_.save()
+    return user_
+
+
 class AskForm(forms.Form):
-    title = forms.CharField(label='Заголовок', max_length=255)
-    text = forms.CharField(label='Текст вопроса', widget=forms.Textarea)
+    title = forms.CharField(label='Заголовок', max_length=255, initial='123')
+    text = forms.CharField(label='Текст вопроса', widget=forms.Textarea, initial='123')
     
     def __init__(self, **kwargs):
-        #self._user = user
-        try:
-            self.user_ = User.objects.get(username='test_user')
-        except:
-            self.user_ = User.objects.create_user('test_user', None, 'test_user')
-            self.user_.save()
+        self.user_ = getTestUser() 
         super(AskForm, self).__init__(kwargs)
         
     def clean_title(self):
@@ -38,15 +42,10 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(label='Ваш ответ', widget=forms.Textarea)
-    question = forms.IntegerField(widget=forms.HiddenInput)
+    question_id = forms.IntegerField(widget=forms.HiddenInput)
      
     def __init__(self, **kwargs):
-        #self._user = user
-        try:
-            self.user_ = User.objects.get(username='test_user')
-        except:
-            self.user_ = User.objects.create_user('test_user', None, 'test_user')
-            self.user_.save()
+        self.user_ = getTestUser()      
         super(AnswerForm, self).__init__(kwargs)
          
     def clean_text(self):
@@ -56,9 +55,9 @@ class AnswerForm(forms.Form):
          
         return text
 
-    def clean_question(self):
+    def clean_question_id(self):
         try:
-            qid = int(self.cleaned_data['question'])
+            qid = self.cleaned_data['question_id']
             #question = Ouestion.objects.get(id = qid)
         except:
             raise ValidationError('Вопрос на который вы отвечаете не существует или удалён')
@@ -67,8 +66,6 @@ class AnswerForm(forms.Form):
         
     def save(self):
         self.cleaned_data['author'] = self.user_
-        self.cleaned_data['question_id'] = self.cleaned_data['question']
-        del self.cleaned_data['question_id']
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
