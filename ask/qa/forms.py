@@ -38,7 +38,7 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(label='Ваш ответ', widget=forms.Textarea)
-    question_id = forms.IntegerField(widget=forms.HiddenInput)
+    question = forms.IntegerField(widget=forms.HiddenInput)
      
     def __init__(self, **kwargs):
         #self._user = user
@@ -67,7 +67,7 @@ class AnswerForm(forms.Form):
         
     def save(self):
         self.cleaned_data['author'] = self.user_
+        self.cleaned_data['question_id'] = self.cleaned_data['question']
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
-	
