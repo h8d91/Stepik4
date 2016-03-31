@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ( $1 = "stepic" )
+if ( $1 -eq "stepic" )
 then sudo service mysql restart
 fi
 
@@ -16,7 +16,7 @@ sudo ln -s /home/box/web/etc/gunicorn.conf /etc/gunicorn.d/hello.py
 sudo ln -s /home/box/web/etc/ask.py /etc/gunicorn.d/ask.py
 
 cd /home/box/web
-python ask/manage.py makemigrations
-python ask/manage.py migrate
+python3 ask/manage.py makemigrations
+python3 ask/manage.py migrate
 
 bash restartServers.sh
