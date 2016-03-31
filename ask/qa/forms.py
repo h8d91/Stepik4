@@ -3,8 +3,8 @@ from qa.models import Question, Answer
 from django.contrib.auth.models import User
 
 class AskForm(forms.Form):
-    title = forms.CharField(label=u'Заголовок', max_length=255)
-    text = forms.CharField(label=u'Текст вопроса', widget=forms.Textarea)
+    title = forms.CharField(label='Заголовок', max_length=255)
+    text = forms.CharField(label='Текст вопроса', widget=forms.Textarea)
     
     def __init__(self, **kwargs):
         #self._user = user
@@ -16,16 +16,16 @@ class AskForm(forms.Form):
         super(AskForm, self).__init__(kwargs)
         
     def clean_title(self):
-        title = self.cleaned_data.get('title')
+        title = self.cleaned_data['title']
         if len(title) < 2:
-            raise ValidateError(u'Заголовок должен быть больше одного символа')
+            raise ValidationError('Заголовок должен быть больше одного символа')
         
         return title
         
     def clean_text(self):
-        text = self.cleaned_data.get('text')
+        text = self.cleaned_data['text']
         if len(text) < 2:
-            raise ValidateError(u'Тект должен быть больше одного символа')
+            raise ValidationError('Тект должен быть больше одного символа')
         
         return text
         
@@ -36,7 +36,7 @@ class AskForm(forms.Form):
         return question
 
 class AnswerForm(forms.Form):
-    text = forms.CharField(label=u'Ваш вопрос', widget=forms.Textarea)
+    text = forms.CharField(label='Ваш вопрос', widget=forms.Textarea)
     question = forms.IntegerField(widget=forms.HiddenInput)
      
     def __init__(self, user, **kwargs):
@@ -47,14 +47,14 @@ class AnswerForm(forms.Form):
         try:
             Ouestion.objects.get(id=self.cleaned_data.get('question'))
         except:
-            raise ValidateError(u'Вопрос на который вы отвечаете не существует или удалён')
+            raise ValidationError('Вопрос на который вы отвечаете не существует или удалён')
          
         return self.cleaned_data 
          
     def clean_text(self):
-        text = self.cleaned_data.get('text')
+        text = self.cleaned_data['text']
         if len(text) < 2:
-            raise ValidateError(u'Тект должен быть больше одного символа')
+            raise ValidationError('Тект должен быть больше одного символа')
          
         return text
         
