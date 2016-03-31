@@ -68,6 +68,7 @@ class AnswerForm(forms.Form):
     def save(self):
         self.cleaned_data['author'] = self.user_
         self.cleaned_data['question_id'] = self.cleaned_data['question']
+        del self.cleaned_data['question_id']
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
