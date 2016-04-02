@@ -16,8 +16,11 @@ class Question(models.Model):
     def __unicode__(self):
         return self.title
     
+    def __str__(self):
+        return self.title
+    
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(auto_now_add=True)
-    question = models.ForeignKey('Question')
+    question = models.ForeignKey(Question)
     author = models.ForeignKey(User)
