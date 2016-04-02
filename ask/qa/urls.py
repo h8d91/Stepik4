@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^answer/.*$', 'qa.views.answer', name='answer'),
     url(r'^popular/.*$', 'qa.views.popular', name='popular'),
     url(r'^new/.*$', 'qa.views.new', name='new'),
+    url(r'^logout/.*$', 'qa.views.logout', name='logout'),
     url(r'^$', 'qa.views.home', name='home'),
 )
