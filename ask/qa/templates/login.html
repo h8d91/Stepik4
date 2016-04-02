@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Вход - QA</title>
+	</head>
+	<body>
+		<h1>Вход</h1>
+		
+		<form method="POST" action="/login/">
+			{{ form.as_p }}
+			{% csrf_token %}
+			<input type="submit" value="Войти"/><br>
+			или <a href="/signup/">зарегистрируйтесь</a>
+		</form>
+	</body>
+</html>
