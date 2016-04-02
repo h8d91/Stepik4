@@ -66,7 +66,7 @@ def question(request, *args, **kwargs):
             'authenticated': request.user.is_authenticated(),
         })
         
-@login_required(login_url='/login/', redirect_field_name='next')
+#@login_required(login_url='/login/', redirect_field_name='next')
 def answer(request):
     if request.method == 'POST':
         answer = AnswerForm(request.POST)
@@ -82,7 +82,7 @@ def answer(request):
     raise Http404
 
 
-@login_required(login_url='/login/', redirect_field_name='next')
+#@login_required(login_url='/login/', redirect_field_name='next')
 def ask(request):
     if request.method == 'POST':
         question = AskForm(request.POST)
