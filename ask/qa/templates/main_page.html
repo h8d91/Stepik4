@@ -5,9 +5,16 @@
 		<title>Главная страница - {{ page.number }}</title>
 	</head>
 	<body>
-		<h1>Новые вопросы</h1>
+		<div style="text-align: right; font-weight: bold">
+			{{ username }}
+			<form method="POST" action="/logout/?next=/?page={{ page.number }}" >
+				<input type="submit" value="Выйти">
+				{% csrf_token %}
+			</form>		
+		</div>
+		<h1>Новые вопросы</h1>		
 		<ul>
-			{% for q in questions %}
+			{% for q in page %}
 				<li><a href="{{ q.get_url }}">{{ q.title }}</a></li>
 			{% endfor %}
 		</ul>
